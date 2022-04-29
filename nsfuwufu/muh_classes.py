@@ -1,13 +1,5 @@
-from os import remove
-from pydoc import describe
-from tracemalloc import start, stop
 from uuid import uuid4
-from requests import get
 from typing import List, Optional, Union
-from discord import Embed, Colour
-from redbot.core import commands
-from linecache import getline
-from random import randint
 
 from .fufu_exceptions import FufuException
 
@@ -23,6 +15,7 @@ class Task:
         self.user_id = user_id
         self.name = name
         self.task_object = task
+        
 
         print("I have made a task")
         #self.active = False
@@ -33,26 +26,6 @@ class Task:
         del self.task_object
         print("i have stopped this task")
     
-    async def get_img_and_embed(self, url):
-        imgurl = await self.get_img_url(url)        
-        my_color = Colour(int(imgurl["color"])) # taking base 10 int and turning it in to Color type        
-
-        # print('message', type(imgurl["message"]), imgurl["message"])
-        # print('color', type(my_color), my_color) #dear god dont use print without () you will get banned from github! xD :D
-        bible_line = getline('bible.txt', randint(1,24600))
-        embedded_image = await self.make_embed(my_color, imgurl["message"], bible_line)
-        return embedded_image
-    
-    async def make_embed(self, my_color, image, desc):
-        em = Embed(color=my_color, title='\u200b', description=desc)
-        em.set_image(url=image)        
-        return em
-
-    async def get_img_url(self, url):        
-        response = get(url)
-        return response.json()
-        
-
     def __str__(self):
         return self.name if self.name else "Anonyamous." # mine has a nya in it but moose is also funnyAnonyamous
                                                         # oh shit i didn't see
