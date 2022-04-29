@@ -1,6 +1,6 @@
 must have:
     - managing tasks 
-    - call the nekobot api 
+    - make the intervals constant but have 1-4 images posted 
     - storage solution for settings 
 can have: 
     - define multiple tasks per user with different intervals

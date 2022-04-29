@@ -13,6 +13,7 @@ class Fuwu(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.fufu_manager = Manager()
+
        
     @commands.command()
     async def fu(self, ctx):
@@ -22,9 +23,10 @@ class Fuwu(commands.Cog):
         await ctx.send("I can do stuff!")
         
     @commands.command()
+    # @commands.bot_has_permissions(embed_links=True)
     async def fufutest(self, ctx):
         if not ctx.author.id:
-            raise FufuException("Ghost mothefucker trying to run fufutest without a user rid.") # xD
+            raise FufuException("Ghost mothefucker trying to run fufutest without a user id.") # xD
         
         fufutask = self.create_fufu_task(ctx, interval=4)
         new_task = Task(ctx.author.id, fufutask, "hell yeah") #over here !
@@ -38,7 +40,15 @@ class Fuwu(commands.Cog):
         async def fufutask(ctx): 
             keyword # to be used later
 
-            await ctx.send("Nya-ho!")
+            NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
+            embed = await self.fufu_manager.tasks[0].get_img_and_embed( #TODO make a getter for tasks under user
+                    url=NEKOBOT_URL.format("coffee")
+            )
+
+            # oops :D, :P
+            # await ctx.send("Nya-ho!")
+            
+            await ctx.send(embed=embed)
             
         please_return_an_object = fufutask.start(ctx)
         return please_return_an_object
@@ -52,3 +62,16 @@ class Fuwu(commands.Cog):
         self.fufu_manager.delete_tasks(ctx.author.id)
         await ctx.send("tasks yeeted") #pls  use correct internet terminology
         # my bad
+
+    @commands.command()
+    async def neko(self,ctx):
+        NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
+        await ctx.send(
+            self.fufu_manager.tasks[0].get_img_url(                
+                name=("hentai"),
+                arg="message",
+                source="Nekobot API",
+                url=NEKOBOT_URL.format("hentai"),
+            )
+        )
+        
