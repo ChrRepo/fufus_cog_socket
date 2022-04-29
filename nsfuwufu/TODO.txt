@@ -1,6 +1,6 @@
 must have:
     - managing tasks 
-    - make the intervals constant but have 1-4 images posted 
+    - make the intervals constant but have 1-4 images posted -  
     - storage solution for settings 
 can have: 
     - define multiple tasks per user with different intervals

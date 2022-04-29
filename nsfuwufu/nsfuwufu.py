@@ -24,7 +24,7 @@ class Fuwu(commands.Cog):
         
     @commands.command()
     # @commands.bot_has_permissions(embed_links=True)
-    async def fufutest(self, ctx):
+    async def fufustart(self, ctx):
         if not ctx.author.id:
             raise FufuException("Ghost mothefucker trying to run fufutest without a user id.") # xD
         
@@ -34,7 +34,7 @@ class Fuwu(commands.Cog):
 
         await ctx.send("Task started uwu :3")
     
-    def create_fufu_task(self, ctx, keyword="hentai", interval=5):
+    def create_fufu_task(self, ctx, keyword="hentai", interval=3600):
 
         @tasks.loop(seconds=interval, reconnect = True)
         async def fufutask(ctx): 
@@ -42,7 +42,7 @@ class Fuwu(commands.Cog):
 
             NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
             embed = await self.fufu_manager.tasks[0].get_img_and_embed( #TODO make a getter for tasks under user
-                    url=NEKOBOT_URL.format("coffee")
+                    url=NEKOBOT_URL.format("hentai")
             )
 
             # oops :D, :P
@@ -58,20 +58,8 @@ class Fuwu(commands.Cog):
         await ctx.send(self.fufu_manager.get_all_tasks_by_user(ctx.author.id)) #beat me :P :D
 
     @commands.command()
-    async def deletetasks(self, ctx):
+    async def fufustop(self, ctx):
         self.fufu_manager.delete_tasks(ctx.author.id)
         await ctx.send("tasks yeeted") #pls  use correct internet terminology
-        # my bad
-
-    @commands.command()
-    async def neko(self,ctx):
-        NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
-        await ctx.send(
-            self.fufu_manager.tasks[0].get_img_url(                
-                name=("hentai"),
-                arg="message",
-                source="Nekobot API",
-                url=NEKOBOT_URL.format("hentai"),
-            )
-        )
+        # my bad 
         
