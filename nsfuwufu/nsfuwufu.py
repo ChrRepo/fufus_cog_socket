@@ -41,7 +41,7 @@ class Fuwu(commands.Cog):
             raise FufuException("Ghost mothefucker trying to run fufutest without a user id.") # xD
         if len(self.fufu_manager.tasks) != 0:
             raise FufuException("Tried to run !fufustart but a task is already running.")
-        fufutask = self.create_fufu_task(ctx, interval=5) #7200
+        fufutask = self.create_fufu_task(ctx, interval=7200) #7200
         new_task = Task(ctx.author.id, fufutask, "hell yeah") #over here !
         self.fufu_manager.add_task(new_task)
         await ctx.send("Task started uwu :3")
