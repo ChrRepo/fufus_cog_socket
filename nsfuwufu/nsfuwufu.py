@@ -22,6 +22,8 @@ class Fuwu(commands.Cog):
         file = open(filename)
         self.bible = file.readlines()
         file.close()
+        self.tag_selection = ["hentai", "hentai", "hentai", "hentai", "hentai",\
+             "hentai", "hentai", "hentai", "hentai", "hentai", "hentai", "hentai", "hentai",  "hentai", "coffee"]
        
     @commands.command()
     async def fu(self, ctx):
@@ -37,27 +39,34 @@ class Fuwu(commands.Cog):
     async def fufustart(self, ctx):
         if not ctx.author.id:
             raise FufuException("Ghost mothefucker trying to run fufutest without a user id.") # xD
-        
-        fufutask = self.create_fufu_task(ctx, interval=5)
+        if len(self.fufu_manager.tasks) != 0:
+            raise FufuException("Tried to run !fufustart but a task is already running.")
+        fufutask = self.create_fufu_task(ctx, interval=5) #7200
         new_task = Task(ctx.author.id, fufutask, "hell yeah") #over here !
         self.fufu_manager.add_task(new_task)
         await ctx.send("Task started uwu :3")
     
     def create_fufu_task(self, ctx, keyword="hentai", interval=3600):
 
-        async def get_img_and_embed(self, url):
+        async def get_img_and_embed(self, url, post_coffee):
             imgurl = await get_img_url(url)        
             my_color = Colour(int(imgurl["color"])) # taking base 10 int and turning it in to Color type
 
             # print('message', type(imgurl["message"]), imgurl["message"])
             # print('color', type(my_color), my_color) #dear god dont use print without () you will get banned from github! xD :D
-            
-            bible_line = self.bible[randint(1,24600)]            
-            embedded_image = await make_embed(my_color, imgurl["message"], bible_line)
+            if post_coffee:
+                desc = self.bible[randint(1,24600)]
+            else:
+                desc = None
+            embedded_image = await make_embed(my_color, imgurl["message"], desc)
             return embedded_image
     
         async def make_embed(my_color, image, desc):
-            em = Embed(color=my_color, description=desc)
+            if desc is not None:
+                em = Embed(color=my_color, description=desc)
+            else:
+                em = Embed(color=my_color)
+            
             em.set_image(url=image)        
             return em
 
@@ -68,11 +77,16 @@ class Fuwu(commands.Cog):
         @tasks.loop(seconds=interval, reconnect = True)
         async def fufutask(ctx): 
             keyword # to be used later
+            coffee = False
+            tag_to_get = self.tag_selection[randint(0,len(self.tag_selection)-1)]
+            if tag_to_get == 'coffee':
+                coffee = True
 
             NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
-            embed = await get_img_and_embed( #TODO make a getter for tasks under user
+            embed = await get_img_and_embed(
                     self,
-                    url=NEKOBOT_URL.format("hentai")
+                    url=NEKOBOT_URL.format(tag_to_get),
+                    post_coffee=coffee
             )
             # oops :D, :P
             # await ctx.send("Nya-ho!")            
@@ -80,13 +94,19 @@ class Fuwu(commands.Cog):
             
         please_return_an_object = fufutask.start(ctx)
         return please_return_an_object
-
+    
+    @commands.is_owner()
+    @commands.is_nsfw()
     @commands.command()
     async def listtasks(self, ctx):        
         await ctx.send(self.fufu_manager.get_all_tasks_by_user(ctx.author.id)) #beat me :P :D
 
+    @commands.is_owner()
+    @commands.is_nsfw()
     @commands.command()
     async def fufustop(self, ctx):
         self.fufu_manager.delete_tasks(ctx.author.id)
+        if ctx.author.id != 873878399255449670:
+            raise FufuException("Someone tried !fufustop who is not salt. Salt's bot salts rules.")
         await ctx.send("tasks yeeted") #pls  use correct internet terminology
         # my bad   
