@@ -36,6 +36,7 @@ class Task:
 class Manager:
     def __init__(self):
         self.tasks = []
+        self.post_interval = 7200
 
     def add_task(self, task):
         self.tasks.append(task)
@@ -70,4 +71,10 @@ class Manager:
                 # wakarimashta sensei
         # haha I saw that!
         # hush
+    def get_post_interval(self):
+        return self.post_interval
+    
+    def set_post_interval(self, interval):
+        self.post_interval = int(interval)
+
 

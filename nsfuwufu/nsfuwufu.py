@@ -24,7 +24,7 @@ class Fuwu(commands.Cog):
         file.close()
         self.tag_selection = ["hentai", "hentai", "hentai", "hentai", "hentai",\
              "hentai", "hentai", "hentai", "hentai", "hentai", "hentai", "hentai", "hentai",  "hentai", "coffee"]
-       
+               
     @commands.command()
     async def fu(self, ctx):
         """This does stuff!"""
@@ -41,7 +41,7 @@ class Fuwu(commands.Cog):
             raise FufuException("Ghost mothefucker trying to run fufutest without a user id.") # xD
         if len(self.fufu_manager.tasks) != 0:
             raise FufuException("Tried to run !fufustart but a task is already running.")
-        fufutask = self.create_fufu_task(ctx, interval=7200) #7200
+        fufutask = self.create_fufu_task(ctx, interval=self.fufu_manager.get_post_interval()) #7200
         new_task = Task(ctx.author.id, fufutask, "hell yeah") #over here !
         self.fufu_manager.add_task(new_task)
         await ctx.send("Task started uwu :3")
@@ -105,8 +105,17 @@ class Fuwu(commands.Cog):
     @commands.is_nsfw()
     @commands.command()
     async def fufustop(self, ctx):
-        self.fufu_manager.delete_tasks(ctx.author.id)
         if ctx.author.id != 873878399255449670:
             raise FufuException("Someone tried !fufustop who is not salt. Salt's bot salts rules.")
+        self.fufu_manager.delete_tasks(ctx.author.id)
         await ctx.send("tasks yeeted") #pls  use correct internet terminology
         # my bad   
+
+    @commands.command()
+    async def set_timer(self, ctx: commands.Context, interval: int):
+        # stops the current task
+        self.fufu_manager.delete_tasks(ctx.author.id)
+        # sets the interval
+        self.fufu_manager.set_post_interval(interval)        
+        await ctx.send("Task was stopped and interval set to {}".format(interval))
+        

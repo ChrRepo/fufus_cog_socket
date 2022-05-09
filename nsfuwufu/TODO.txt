@@ -1,6 +1,7 @@
 must have:
     - managing tasks 
     - make the intervals constant but have 1-4 images posted
+        e.g. !fufu 2
     - storage solution for settings 
     - change the genre of images gathered i.e. 
 can have: 
@@ -8,3 +9,4 @@ can have:
     - maybe set limits on tasks
     - role checks
     - add more interactivity to commands like bot waiting for user input instead of doing simple commands
+
