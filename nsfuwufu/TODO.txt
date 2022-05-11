@@ -1,9 +1,9 @@
 must have:
     - managing tasks 
-    - make the intervals constant but have 1-4 images posted
-        e.g. !fufu 2
+    - make the intervals constant but have 1-4 images posted   
     - storage solution for settings 
     - change the genre of images gathered i.e. 
+    - find a list of artists then grab images from these artists on the boorus 
 can have: 
     - define multiple tasks per user with different intervals
     - maybe set limits on tasks
