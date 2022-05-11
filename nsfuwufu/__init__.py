@@ -2,8 +2,10 @@ from .nsfuwufu import Fuwu
 from redbot.core.bot import Red
 
 
+
 __red_end_user_data_statement__ = (
-    "This cog does not persistently store data or metadata about users."
+    "This cog does not persistently work to any degree of satisfaction\
+    but you might see catgirls so grin and eat the turd sandwhich."
 )
 
 

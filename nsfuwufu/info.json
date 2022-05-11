@@ -1,0 +1,11 @@
+{
+    "author": ["saltnfufu"],
+    "install_msg": "Nsfw cat girls and old tesatament quotes, embeds from nekobot.",
+    "name": "fufu",
+    "short": "Send random NSFW images from nekobot API and quotes the old testament.",
+    "description": "Send random NSFW images from nekobot API and quotes the old testament.",
+    "tags": ["nsfw", "neko", "bible"],
+    "min_bot_version": "1.0.0",
+    "end_user_data_statement": "This cog does not persistently store data or metadata about users."
+}
+  
