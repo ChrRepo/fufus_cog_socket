@@ -6,6 +6,7 @@
     "description": "Send random NSFW images from nekobot API and quotes the old testament.",
     "tags": ["nsfw", "neko", "bible"],
     "min_bot_version": "1.0.0",
-    "end_user_data_statement": "This cog does not persistently store data or metadata about users."
+    "end_user_data_statement": "This cog does not persistently store data or metadata about users.",
+    "requirements": ["aiohttp", "aiohttp-json-rpc", "aiosqlite", "appdirs", "apsw-wheels", "async-timeout", "attrs", "Babel", "booru", "certifi", "cffi", "chardet", "charset-normalizer", "click", "colorama", "commonmark", "contextlib2", "discord.py", "distro", "fuzzywuzzy", "idna", "importlib-metadata", "Jinja2", "Markdown", "MarkupSafe", "multidict", "netaddr", "psutil", "pycparser", "Pygments", "PyNaCl", "python-dateutil", "python-Levenshtein-wheels", "pytz", "PyYAML", "Red-DiscordBot", "Red-Lavalink", "redbot", "requests", "rich", "schema", "six", "thor", "typing-extensions", "urllib3", "uvloop", "xmltodict", "yarl", "zipp"]
 }
   

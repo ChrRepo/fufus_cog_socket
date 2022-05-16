@@ -118,4 +118,4 @@ class Fuwu(commands.Cog):
         # sets the interval
         self.fufu_manager.set_post_interval(interval)        
         await ctx.send("Task was stopped and interval set to {}".format(interval))
-        
+                
