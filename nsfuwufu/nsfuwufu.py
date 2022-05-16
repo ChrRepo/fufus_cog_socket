@@ -41,7 +41,7 @@ class Fuwu(commands.Cog):
             raise FufuException("Ghost mothefucker trying to run fufutest without a user id.") # xD
         if len(self.fufu_manager.tasks) != 0:
             raise FufuException("Tried to run !fufustart but a task is already running.")
-        fufutask = self.create_fufu_task(ctx, interval=self.fufu_manager.get_post_interval()) #7200
+        fufutask = self.create_fufu_task(ctx, interval=5) #interval=self.fufu_manager.get_post_interval
         new_task = Task(ctx.author.id, fufutask, "hell yeah") #over here !
         self.fufu_manager.add_task(new_task)
         await ctx.send("Task started uwu :3")
@@ -56,9 +56,11 @@ class Fuwu(commands.Cog):
             # print('color', type(my_color), my_color) #dear god dont use print without () you will get banned from github! xD :D
             if post_coffee:
                 desc = self.bible[randint(1,24600)]
+                imgurl = imgurl["message"]
             else:
                 desc = None
-            embedded_image = await make_embed(my_color, imgurl["message"], desc)
+            # change this to go to a booru function that returns an image link 
+            embedded_image = await make_embed(my_color, imgurl, desc)
             return embedded_image
     
         async def make_embed(my_color, image, desc):
@@ -70,28 +72,46 @@ class Fuwu(commands.Cog):
             em.set_image(url=image)        
             return em
 
+        async def make_embed_for_booru(image):
+            em = Embed()            
+            em.set_image(url=image)        
+            return em
+
         async def get_img_url(url):        
-            response = get(url)
+            response = get(url)            
             return response.json()     
+
+        async def get_booru_img(url): 
+            response = get(url)                       
+            return response.json() 
         
         @tasks.loop(seconds=interval, reconnect = True)
         async def fufutask(ctx): 
+            NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
+            DANBOORU_URL = "https://danbooru.donmai.us/posts.json?tags={}"
             keyword # to be used later
             coffee = False
             tag_to_get = self.tag_selection[randint(0,len(self.tag_selection)-1)]
+            new_urls = None
             if tag_to_get == 'coffee':
                 coffee = True
+                new_urls = NEKOBOT_URL.format(tag_to_get)
+            else:
+                new_urls = await get_booru_img(DANBOORU_URL.format("cutesexyrobutts"))
+                single_image = new_urls[len(new_urls)-1]
+                # print(new_urls[len(new_urls)-1]["file_url"])
+                
+                # if new_url[0]["tag_string"].find('loli', 'gore') > 0:
+                #     raise FufuException("Aw shit bois we found banned tags.")
+                if "loli" in single_image["tag_string"]:
+                    pass
+                elif "gore" in single_image["tag_string"]:
+                    pass
 
-            NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
-            embed = await get_img_and_embed(
-                    self,
-                    url=NEKOBOT_URL.format(tag_to_get),
-                    post_coffee=coffee
-            )
-            # oops :D, :P
-            # await ctx.send("Nya-ho!")            
-            await ctx.send(embed=embed)
-            
+                embed = await make_embed_for_booru(image=single_image["file_url"])
+                # oops :D, :P
+                # await ctx.send("Nya-ho!") 
+                await ctx.send(embed=embed)
         please_return_an_object = fufutask.start(ctx)
         return please_return_an_object
     
@@ -118,4 +138,3 @@ class Fuwu(commands.Cog):
         # sets the interval
         self.fufu_manager.set_post_interval(interval)        
         await ctx.send("Task was stopped and interval set to {}".format(interval))
-                
