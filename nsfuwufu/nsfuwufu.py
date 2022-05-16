@@ -88,7 +88,7 @@ class Fuwu(commands.Cog):
         @tasks.loop(seconds=interval, reconnect = True)
         async def fufutask(ctx): 
             NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
-            DANBOORU_URL = "https://danbooru.donmai.us/posts.json?tags={}"
+            DANBOORU_URL = "https://danbooru.donmai.us/posts.json?tags={}&random=true"
             keyword # to be used later
             coffee = False
             tag_to_get = self.tag_selection[randint(0,len(self.tag_selection)-1)]
@@ -98,11 +98,7 @@ class Fuwu(commands.Cog):
                 new_urls = NEKOBOT_URL.format(tag_to_get)
             else:
                 new_urls = await get_booru_img(DANBOORU_URL.format("cutesexyrobutts"))
-                single_image = new_urls[len(new_urls)-1]
-                # print(new_urls[len(new_urls)-1]["file_url"])
-                
-                # if new_url[0]["tag_string"].find('loli', 'gore') > 0:
-                #     raise FufuException("Aw shit bois we found banned tags.")
+                single_image = new_urls[randint(0,len(new_urls)-1)]                
                 if "loli" in single_image["tag_string"]:
                     pass
                 elif "gore" in single_image["tag_string"]:
