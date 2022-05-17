@@ -1,4 +1,4 @@
-from .nsfuwufu2 import Fuwu
+from .nsfuwufu import Fuwu
 from redbot.core.bot import Red
 
 
