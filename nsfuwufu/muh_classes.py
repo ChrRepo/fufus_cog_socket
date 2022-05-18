@@ -49,7 +49,12 @@ class Manager:
             "dishwasher1910",
             "anima_(togashi)",
             "simao_(x_x36131422)",
-            "momo_no_sukebe"            
+            "momo_no_sukebe",
+            "niliu_chahui",
+            "z.taiga",
+            "gomashio_ponz",
+            "black_mutou",
+            "theobrobine"
         ]
 
     def add_task(self, task):
@@ -90,5 +95,11 @@ class Manager:
     
     def set_post_interval(self, interval):
         self.post_interval = int(interval)
+
+    def get_all_artists(self):
+        output = ""
+        for artist in self.artist_list:
+            output += artist + '\n'
+        return output
 
 

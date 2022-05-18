@@ -136,6 +136,8 @@ class Fuwu(commands.Cog):
         await ctx.send("tasks yeeted") #pls  use correct internet terminology
         # my bad   
 
+    @commands.is_owner()
+    @commands.is_nsfw()
     @commands.command()
     async def set_timer(self, ctx: commands.Context, interval: int):
         # stops the current task
@@ -143,3 +145,11 @@ class Fuwu(commands.Cog):
         # sets the interval
         self.fufu_manager.set_post_interval(interval)        
         await ctx.send("Task was stopped and interval set to {}".format(interval))
+
+    @commands.is_owner()
+    @commands.is_nsfw()
+    @commands.command()
+    async def get_artists(self, ctx: commands.Context):
+        list_of_artists = self.fufu_manager.get_all_artists()
+        await ctx.send(list_of_artists)
+
