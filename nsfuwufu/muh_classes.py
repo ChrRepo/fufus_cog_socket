@@ -36,7 +36,7 @@ class Task:
 class Manager:
     def __init__(self):
         self.tasks = []
-        self.post_interval = 5
+        self.post_interval = 3600
         self.artist_list = [
             "Chihunhentai",
             "blue-senpai",
