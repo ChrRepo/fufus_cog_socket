@@ -96,9 +96,15 @@ class Fuwu(commands.Cog):
             coffee = False
             tag_to_get = self.tag_selection[randint(0,len(self.tag_selection)-1)]
             new_urls = None
+            embed = None
             if tag_to_get == 'coffee':
                 coffee = True
                 new_urls = NEKOBOT_URL.format(tag_to_get)
+                embed = await get_img_and_embed(
+                    self,
+                    url=NEKOBOT_URL.format(tag_to_get),
+                    post_coffee=coffee
+                )
             else:
                 artist_list_length = len(self.fufu_manager.artist_list)
                 random_artist = self.fufu_manager.artist_list[randint(0,artist_list_length - 1)]
@@ -114,7 +120,7 @@ class Fuwu(commands.Cog):
                 embed = await make_embed_for_booru(image=single_image["file_url"])
                 # oops :D, :P
                 # await ctx.send("Nya-ho!") 
-                await ctx.send(embed=embed)
+            await ctx.send(embed=embed)
         please_return_an_object = fufutask.start(ctx)
         return please_return_an_object
         #test
