@@ -158,3 +158,10 @@ class Fuwu(commands.Cog):
         list_of_artists = self.fufu_manager.get_all_artists()
         await ctx.send(list_of_artists)
 
+    @commands.is_owner()
+    @commands.is_nsfw()
+    @commands.command()
+    async def get_version(self, ctx: commands.Context):
+        version = self.fufu_manager.get_version()
+        await ctx.send(version)
+

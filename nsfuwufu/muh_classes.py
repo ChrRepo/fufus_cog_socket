@@ -15,6 +15,7 @@ class Task:
         self.user_id = user_id
         self.name = name
         self.task_object = task
+        self.bot_version = "0.5"
         
 
         print("I have made a task")
@@ -101,5 +102,8 @@ class Manager:
         for artist in self.artist_list:
             output += artist + '\n'
         return output
+
+    def get_version(self):
+        return self.bot_version
 
 
