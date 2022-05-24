@@ -91,7 +91,7 @@ class Fuwu(commands.Cog):
         @tasks.loop(seconds=interval, reconnect = True)
         async def fufutask(ctx): 
             NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
-            DANBOORU_URL = "https://danbooru.donmai.us/posts.json?tags={}&random=true"
+            DANBOORU_URL = "https://danbooru.donmai.us/posts.json?tags={}&random=true&limit=100"
             keyword # to be used later
             coffee = False
             tag_to_get = self.tag_selection[randint(0,len(self.tag_selection)-1)]
