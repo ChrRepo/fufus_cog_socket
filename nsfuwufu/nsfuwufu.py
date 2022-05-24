@@ -108,14 +108,13 @@ class Fuwu(commands.Cog):
             else:
                 artist_list_length = len(self.fufu_manager.artist_list)
                 random_artist = self.fufu_manager.artist_list[randint(0,artist_list_length - 1)]
-                new_urls = await get_booru_img(DANBOORU_URL.format(random_artist))
-                single_image = new_urls[randint(0,len(new_urls)-1)]                
-                if "loli" in single_image["tag_string"]:
-                    please_return_an_object = None
-                    return please_return_an_object
-                elif "gore" in single_image["tag_string"]:
-                    please_return_an_object = None
-                    return please_return_an_object
+                new_urls = await get_booru_img(DANBOORU_URL.format(random_artist))                
+                single_image = new_urls[0]
+                for urls in new_urls:
+                    # if not "loli" in urls["tag_string"] or not "gore" in urls["tag_string"]:
+                    if not "loli" in urls["tag_string"] and not "gore" in urls["tag_string"]:
+                        single_image = urls
+                        break                                   
 
                 embed = await make_embed_for_booru(image=single_image["file_url"])
                 # oops :D, :P
