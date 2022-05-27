@@ -37,7 +37,7 @@ class Manager:
     def __init__(self):
         self.tasks = []
         self.post_interval = 3600
-        self.bot_version = "0.69.1"        
+        self.bot_version = "0.69.2"        
         self.artist_list = [
             "Chihunhentai",
             "blue-senpai",
