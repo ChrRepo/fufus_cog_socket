@@ -186,9 +186,10 @@ class Fuwu(commands.Cog):
         timer = self.fufu_manager.get_post_interval()
         await ctx.send("""
             ***
-            Commands\n============\n
+            Commands\n============
             1. get_timer
             2. get_artists
-            3. get_version***
+            3. get_version
+            ***
             """
         )
