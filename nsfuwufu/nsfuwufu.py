@@ -25,14 +25,6 @@ class Fuwu(commands.Cog):
         self.tag_selection = ["hentai", "hentai", "hentai", "hentai", "hentai",\
              "hentai", "hentai", "hentai", "hentai", "hentai", "hentai", "hentai", "hentai",  "hentai", "coffee"]
                
-    @commands.command()
-    async def fu(self, ctx):
-        """This does stuff!"""
-        # Your code will go here        
-        print(dir(ctx.author))
-        await ctx.send("I can do stuff!")
-        
-    @commands.is_owner()
     @commands.is_nsfw()
     @commands.command()
     # @commands.bot_has_permissions(embed_links=True)
@@ -130,13 +122,17 @@ class Fuwu(commands.Cog):
         #test
     
     
-    @commands.is_owner()
     @commands.is_nsfw()
     @commands.command()
     async def listtasks(self, ctx):        
+        try:
+            if ctx.author.id != 873878399255449670:
+                raise FufuException("Someone tried !fufustop who is not salt. Salt's bot salts rules.")
+        except FufuException:
+            await ctx.send("you trying to stop my bot you cheeky motherfucker?")
+            return
         await ctx.send(self.fufu_manager.get_all_tasks_by_user(ctx.author.id)) #beat me :P :D
 
-    @commands.is_owner()
     @commands.is_nsfw()
     @commands.command()
     async def fufustop(self, ctx):
@@ -151,7 +147,6 @@ class Fuwu(commands.Cog):
         await ctx.send("tasks yeeted") #pls  use correct internet terminology
         # my bad   
 
-    @commands.is_owner()
     @commands.is_nsfw()
     @commands.command()
     async def set_timer(self, ctx: commands.Context, interval: int):
