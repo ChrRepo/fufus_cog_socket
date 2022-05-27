@@ -37,10 +37,15 @@ class Fuwu(commands.Cog):
     @commands.command()
     # @commands.bot_has_permissions(embed_links=True)
     async def fufustart(self, ctx):
-        if not ctx.author.id:
-            raise FufuException("Ghost mothefucker trying to run fufutest without a user id.") # xD
+        try:            
+            if ctx.author.id != 873878399255449670:
+                raise FufuException("Someone tried !fufustop who is not salt. Salt's bot salts rules.")
+        except FufuException:
+            await ctx.send("you trying to start my bot again you cheeky motherfucker?")
+            return
         if len(self.fufu_manager.tasks) != 0:
             raise FufuException("Tried to run !fufustart but a task is already running.")
+            return
         fufutask = self.create_fufu_task(ctx, interval=self.fufu_manager.get_post_interval()) #interval=self.fufu_manager.get_post_interval
         if fufutask == None:
             await ctx.send("")
@@ -135,8 +140,13 @@ class Fuwu(commands.Cog):
     @commands.is_nsfw()
     @commands.command()
     async def fufustop(self, ctx):
-        if ctx.author.id != 873878399255449670:
-            raise FufuException("Someone tried !fufustop who is not salt. Salt's bot salts rules.")
+        try:
+            if ctx.author.id != 873878399255449670:
+                raise FufuException("Someone tried !fufustop who is not salt. Salt's bot salts rules.")
+        except FufuException:
+            await ctx.send("you trying to stop my bot you cheeky motherfucker?")
+            return
+
         self.fufu_manager.delete_tasks(ctx.author.id)
         await ctx.send("tasks yeeted") #pls  use correct internet terminology
         # my bad   
@@ -145,23 +155,45 @@ class Fuwu(commands.Cog):
     @commands.is_nsfw()
     @commands.command()
     async def set_timer(self, ctx: commands.Context, interval: int):
+        try:
+            if ctx.author.id != 873878399255449670:
+                raise FufuException("Someone tried !fufustop who is not salt. Salt's bot salts rules.")
+        except FufuException:
+            await ctx.send("you trying to set the timer you cheeky motherfucker?")
+            return
         # stops the current task
         self.fufu_manager.delete_tasks(ctx.author.id)
         # sets the interval
         self.fufu_manager.set_post_interval(interval)        
         await ctx.send("Task was stopped and interval set to {}".format(interval))
 
-    @commands.is_owner()
     @commands.is_nsfw()
     @commands.command()
     async def get_artists(self, ctx: commands.Context):
         list_of_artists = self.fufu_manager.get_all_artists()
         await ctx.send(list_of_artists)
 
-    @commands.is_owner()
     @commands.is_nsfw()
     @commands.command()
     async def get_version(self, ctx: commands.Context):
         version = self.fufu_manager.get_version()
         await ctx.send(version)
 
+    @commands.is_nsfw()
+    @commands.command()
+    async def get_timer(self, ctx: commands.Context):
+        timer = self.fufu_manager.get_post_interval()
+        await ctx.send(timer)
+
+    @commands.is_nsfw()
+    @commands.command()
+    async def fufu(self, ctx: commands.Context):
+        timer = self.fufu_manager.get_post_interval()
+        await ctx.send("""
+            ***
+            Commands\n============\n
+            1. get_timer
+            2. get_artists
+            3. get_version***
+            """
+        )
