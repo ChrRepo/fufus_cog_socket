@@ -15,6 +15,7 @@ class Task:
         self.user_id = user_id
         self.name = name
         self.task_object = task
+        self.flags = {}
         
 
         print("I have made a task")
@@ -36,8 +37,9 @@ class Task:
 class Manager:
     def __init__(self):
         self.tasks = []
+        self.sub_tasks = []
         self.post_interval = 3600
-        self.bot_version = "0.69.2"        
+        self.bot_version = "0.69.3"        
         self.artist_list = [
             "Chihunhentai",
             "blue-senpai",
@@ -57,13 +59,21 @@ class Manager:
             "black_mutou",
             "theobrobine"
         ]
+        
 
     def add_task(self, task):
         self.tasks.append(task)
 
+    def add_sub_task(self, sub_task):
+        self.sub_tasks.append(sub_task)
+
     def stop_all_tasks(self):
         for task in self.tasks:
             task.cancel() # this might be cancel(), we gotta check discord docs!
+
+    def stop_all_sub_tasks(self):
+        for task in self.sub_tasks:
+            task.cancel() 
 
     def delete_task():
         pass
@@ -74,7 +84,12 @@ class Manager:
             if task.user_id == user:
                 output.append(task)
         return output
-    
+
+    def get_task_by_user(self, user):      
+        for task in self.tasks:
+            if task.user_id == user:
+                return task
+        
     def delete_tasks(self, user):
         for index, task in enumerate(self.tasks):
             if task.user_id == user:
@@ -91,6 +106,12 @@ class Manager:
                 # wakarimashta sensei
         # haha I saw that!
         # hush
+
+    def delete_sub_tasks(self, user):
+        for index, sub_task in enumerate(self.sub_tasks):            
+                sub_task.cancel()
+                del self.sub_tasks[index]
+
     def get_post_interval(self):
         return self.post_interval
     

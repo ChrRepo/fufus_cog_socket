@@ -24,7 +24,9 @@ class Fuwu(commands.Cog):
         file.close()
         self.tag_selection = ["hentai", "hentai", "hentai", "hentai", "hentai",\
              "hentai", "hentai", "hentai", "hentai", "hentai", "hentai", "hentai", "hentai",  "hentai", "coffee"]
-               
+        self.post_counter = 0
+        self.posts_this_interval = 0
+                       
     @commands.is_nsfw()
     @commands.command()
     # @commands.bot_has_permissions(embed_links=True)
@@ -144,6 +146,7 @@ class Fuwu(commands.Cog):
             return
 
         self.fufu_manager.delete_tasks(ctx.author.id)
+        self.fufu_manager.delete_sub_tasks(ctx.author.id)
         await ctx.send("tasks yeeted") #pls  use correct internet terminology
         # my bad   
 
@@ -183,7 +186,6 @@ class Fuwu(commands.Cog):
     @commands.is_nsfw()
     @commands.command()
     async def fufu(self, ctx: commands.Context):
-        timer = self.fufu_manager.get_post_interval()
         await ctx.send("""
             ***
             Commands\n============
@@ -193,3 +195,72 @@ class Fuwu(commands.Cog):
             ***
             """
         )
+
+    @commands.is_nsfw()
+    @commands.command()    
+    async def f1(self,ctx):       
+        try:            
+            if ctx.author.id != 873878399255449670:
+                raise FufuException("Someone tried !fufustop who is not salt. Salt's bot salts rules.")
+        except FufuException:
+            await ctx.send("you trying to start my bot again you cheeky motherfucker?")
+            return
+        overlord_controller = self.controller_loop(ctx,interval=self.fufu_manager.get_post_interval())
+        if overlord_controller == None:
+            await ctx.send("")
+
+        new_task = Task(ctx.author.id, overlord_controller, "hell yeah") #over here !
+        self.fufu_manager.add_task(new_task)
+
+          
+        
+        
+
+    def controller_loop(self, ctx, interval=3600):
+        @tasks.loop(seconds=interval, reconnect = True)
+        async def new_looper(ctx):
+            my_flags = {
+                "post_counter": 0,
+                "posts_this_interval": randint(2,7)
+            }
+            my_task = self.fufu_manager.get_task_by_user(ctx.author.id)
+            my_task.flags = my_flags   
+            # improve get task with this:
+            # user_task = next((task for task in self.tasks if task.user_id == user), None)
+
+            self.fufu_manager.stop_all_sub_tasks()            
+            self.posts_this_interval = randint(2,7)            
+            new_sub_task = self.slave_loop(ctx, interval = 5)
+            self.fufu_manager.add_sub_task(new_sub_task) 
+            
+            
+
+            # try and set post_coutner to the dictionary and call it from the existing references
+           
+
+            NEKOBOT_URL = "https://nekobot.xyz/api/image?type={}"
+            DANBOORU_URL = "https://danbooru.donmai.us/posts.json?tags={}&random=true&limit=100"           
+            coffee = False
+            tag_to_get = self.tag_selection[randint(0,len(self.tag_selection)-1)]
+            new_urls = None
+            embed = None
+            await ctx.send("I have started the overlord_loop")
+        please_return_an_object = new_looper.start(ctx)
+        return please_return_an_object
+                 
+        
+ 
+    def slave_loop(self, ctx, interval=5):        
+        @tasks.loop(seconds=interval, reconnect = True)
+        async def new_loopee(ctx): 
+            
+            if self.post_counter >= self.posts_this_interval:                
+                self.fufu_manager.delete_sub_tasks(ctx.author.id)
+                await ctx.send("this loop has ended ")
+
+            self.post_counter += 1
+            await ctx.send("i am at {} of {}".format(self.post_counter, self.posts_this_interval))   
+        please_return_an_object = new_loopee.start(ctx)
+        return please_return_an_object
+                 
+ 
