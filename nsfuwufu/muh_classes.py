@@ -48,6 +48,7 @@ class Manager:
             "cutesexyrobutts",
             "pinki_o64",
             "jakko",
+            "nat_the_lich",
             "foxyreine",
             "dishwasher1910",
             "anima_(togashi)",
