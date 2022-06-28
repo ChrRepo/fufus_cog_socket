@@ -58,7 +58,11 @@ class Manager:
             "z.taiga",
             "gomashio_ponz",
             "black_mutou",
-            "theobrobine"
+            "theobrobine",
+            "zen33n",
+            "shengtian",
+            "ginhaha",
+            "rikudou_inuhiko"
         ]
         
 
